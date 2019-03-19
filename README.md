@@ -15,7 +15,6 @@ Represent this data into visual representation.
 - Python3 - Used for the majority of the asignment.
 - JSON - Used for communication between devices / services.
 - MySQL - Used for database.
-- Ruby - For web backend (Only used for making web page to show data nicely)
 
 ## Files included
 - config.json
