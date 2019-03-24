@@ -7,8 +7,6 @@ from pprint import pprint
 import hashlib #for the md5 hash
 import requests #for push bullet
 import MySQLdb #for database
-import re #to escape strings for SQL Injection attacks
-
 
 #Create Class
 class Reading:
