@@ -5,7 +5,7 @@
 ## Purpose
 Purpose is to log weather and humidity into a database, send logged data to PushBullet, and to other devices via Bluetooth.
 Represent this data into visual representation.
-##### Join the Assignment channel [here](https://www.pushbullet.com/channel?tag=IoT-s3656070)
+##### Join the Assignment PushBullet channel [here](https://www.pushbullet.com/channel?tag=IoT-s3656070)
 
 
 ## Assignment By
