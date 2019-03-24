@@ -7,9 +7,6 @@ from pprint import pprint
 import hashlib
 sense = SenseHat()
 
-
-
-
 #Create Class
 class Reading:
     temp = 0.0
