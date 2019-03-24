@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from sense_hat import SenseHat
 from datetime import datetime
 import json
@@ -26,7 +28,7 @@ class Reading:
         self.humidity = humidity
         self.time = time
         self.status = status
-        self.urid = hashlib.md5(self.time).hexdigest() #uses the current datetime and hashes it for a URID (Unique Reading Identifiation)
+        self.urid = hashlib.md5(self.time.encode('utf8')).hexdigest() #uses the current datetime and hashes it for a URID (Unique Reading Identifiation)
 
 
         with open('config.json') as f: #opens the config.json file
@@ -58,15 +60,17 @@ reading.checkStatus() #checks the humidity and updates the status based on min_h
 
 
 import MySQLdb #the bellow adds this object to a new row in the database.
-import mysql.connector
 db = MySQLdb.connect(host="localhost", user="iot", passwd="Password123?", db="iot")
-mydb = mysql.connector.connect(host="localhost", user="root",passwd="Password123?",database="iot",port="3306")
-mycursor = mydb.cursor()
+cursor = db.cursor()
 
 sql = "INSERT INTO temps (temp, humidity, status) VALUES (%s, %s, %s)"
 val = (reading.temp, reading.humidity, reading.status)
-mycursor.execute(sql, val)
+cursor.execute(sql, val)
 
-mydb.commit() #saves row in database based of object 
+db.commit() #saves row in database based of object 
 
 reading.log() #logs the object to the console
+
+
+#NOTE IF YOURE HAVING ISSUES RUNNING THIS FILE PLEASE GO HERE DUE TO MySQLdb:
+#https://raspberrypi.stackexchange.com/questions/78215/how-to-connect-mysqldb-in-python-3/78217
