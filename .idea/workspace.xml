@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="64f55447-dcaa-430b-9d1b-28e85d97f9ff" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics.py3" beforeDir="false" afterPath="$PROJECT_DIR$/analytics.py3" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -57,8 +57,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/analytics.py3">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="24" column="31" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="31" />
+            <state relative-caret-position="205">
+              <caret line="36" column="2" selection-start-line="36" selection-start-column="2" selection-end-line="36" selection-end-column="2" />
               <folding>
                 <element signature="e#19#33#0" expanded="true" />
               </folding>
@@ -74,7 +74,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/monitorAndNotify.py3">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="407">
+            <state relative-caret-position="990">
               <caret line="72" column="45" selection-start-line="72" selection-start-column="45" selection-end-line="72" selection-end-column="45" />
               <folding>
                 <element signature="e#20#50#0" expanded="true" />
@@ -101,6 +101,7 @@
         <option value="$PROJECT_DIR$/monitorAndNotify.py3" />
         <option value="$PROJECT_DIR$/databaseToTextFile.py" />
         <option value="$PROJECT_DIR$/analytics.py" />
+        <option value="$PROJECT_DIR$/analytics.py3" />
       </list>
     </option>
   </component>
@@ -108,7 +109,7 @@
     <option name="x" value="128" />
     <option name="y" value="23" />
     <option name="width" value="1312" />
-    <option name="height" value="811" />
+    <option name="height" value="806" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -194,17 +195,18 @@
       <workItem from="1553568347123" duration="2846000" />
       <workItem from="1553572548212" duration="17000" />
       <workItem from="1553572610396" duration="1737000" />
+      <workItem from="1553578002515" duration="274000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12370000" />
+    <option name="totallyTimeSpent" value="12644000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="128" y="23" width="1312" height="811" extended-state="0" />
+    <frame x="128" y="23" width="1312" height="806" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14645669" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1488189" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -220,7 +222,7 @@
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.32988167" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.32988167" />
-      <window_info active="true" anchor="bottom" id="File Transfer" order="13" visible="true" weight="0.32684284" />
+      <window_info active="true" anchor="bottom" id="File Transfer" order="13" visible="true" weight="0.32633054" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -232,6 +234,7 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/analytics.py3.py" />
     <entry file="file://$PROJECT_DIR$/insert.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -266,16 +269,9 @@
     <entry file="file://$PROJECT_DIR$/config.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/analytics.py3.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/monitorAndNotify.py3">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="407">
+        <state relative-caret-position="990">
           <caret line="72" column="45" selection-start-line="72" selection-start-column="45" selection-end-line="72" selection-end-column="45" />
           <folding>
             <element signature="e#20#50#0" expanded="true" />
@@ -285,8 +281,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/analytics.py3">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="31" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="31" />
+        <state relative-caret-position="205">
+          <caret line="36" column="2" selection-start-line="36" selection-start-column="2" selection-end-line="36" selection-end-column="2" />
           <folding>
             <element signature="e#19#33#0" expanded="true" />
           </folding>
