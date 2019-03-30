@@ -9,7 +9,7 @@ connection = MySQLdb.connect(host="localhost", user="iot", passwd="Password123?"
 cursor = connection.cursor()
 
 # execute the SQL query using execute() method. should be date and status
-cursor.execute("select DATE_FORMAT(created_at, '%d/%m/%Y'), status from temps")
+cursor.execute("select DATE_FORMAT(created_at, '%d/%m/%Y'), status, tempStatusMSG  from readings")
 
 # fetch all of the rows from the query
 data = cursor.fetchall()
