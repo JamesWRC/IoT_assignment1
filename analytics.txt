@@ -1,0 +1,23 @@
+- With the data that you have, what kind of data visualisation graph should be used?
+(Scatter plots, Bar charts and Histograms, Line plots, Pie charts, etc.)
+Bar graph was better because you can compare values and to keep track of changes.
+
+- What should be represented in the above graph? Why did you make that decision?
+In the graph, we want to use temperature, humidity and created_at data. with humidity/temperature,
+we can compare values with the other values of the other days. we can use created_at to display the dates underneath each temperature/humidity values.
+
+
+- Python supports numerous data visualisation libraries. Which two libraries did you narrow it down to?
+decided to use matplotlib and seaborn.
+
+- an analytical comparison of the libraries used, advantages/disadvantages, simplicity/complexity, flexibility/configurations, anything you may think is necessary.
+
+. Seaborn has nicer default aesthetics. Meaning that its default aesthetics are much more visually appealing than matplotlib.
+. Matplotlib has default aesthetics.
+
+. Seaborn are easy to customise aesthetics. you can change the background graph colour, you can set palette, the quality palette is good,
+you can do sequential colour palette and you can diverge colour palettes.
+. Matplotlib doesn't have much customising except you can only change the color of the bars.
+
+. Seaborn are statistically-minded plots. meaning that seaborn has some built-in plots that matplotlib does not.
+. For Matplotlib, you have to create your own dataset, create your own x-axis and y-axis and etc.
