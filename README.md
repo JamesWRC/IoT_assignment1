@@ -7,7 +7,7 @@ Purpose is to log weather and humidity into a database, send logged data to Push
 Represent this data into visual representation.
 ##### Join the Assignment PushBullet channel [here](https://www.pushbullet.com/channel?tag=IoT-s3656070)
 
-##Important
+## Important
 We have used many libraries so please make sure you have the required libraries setup on your Raspberry Pi 3
 - Install and setup MySQL
 - Create a database called "iot" with the pasword of "Password123?"
