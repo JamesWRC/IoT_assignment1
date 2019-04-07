@@ -14,7 +14,7 @@ class Analytics:
     tupleHumidity = ""
     tupleDate = ""
 
-    def database(self):
+    def __init__(self):
         # open a database connection
         connection = MySQLdb.connect(host="localhost", user="iot", passwd="Password123?", database="iot")
 
@@ -122,6 +122,5 @@ class Analytics:
 
 
 analytics = Analytics()
-analytics.database()
 analytics.graph_one()
 analytics.graph_two()
