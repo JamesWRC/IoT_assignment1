@@ -26,10 +26,10 @@ Represent this data into visual representation.
 - analyticsreport.txt
 
 ## Check List
-- [ ] Task A
-- [ ] Task B
-- [ ] Task C
-- [ ] Task D
-- [ ] Task E
+- [x] Task A
+- [x] Task B
+- [x] Task C
+- [x] Task D
+- [x] Task E
 
 
