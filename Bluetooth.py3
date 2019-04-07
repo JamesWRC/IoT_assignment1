@@ -35,6 +35,7 @@ class Bluetooth:
         self.deviceName = deviceName
         currentDeviceName = None
         currentDeviceMac = None
+        
         print("Looking up device name: {} in database...".format(self.deviceName))
         connection = MySQLdb.connect(host="localhost", user="iot", passwd="Password123?", database="iot")
         cursor = connection.cursor()
@@ -42,6 +43,7 @@ class Bluetooth:
         adr = (deviceName, )
         cursor.execute(sql, adr)
         rows = cursor.fetchall()
+
         for row in rows:
             currentDeviceName = row[0]  # loops through and gets name
             currentDeviceMac = row[1]  # loops through and gets mac addres
@@ -60,21 +62,23 @@ class Bluetooth:
         while True:
             foundDevice = False
             time.sleep(3) #Sleep three seconds 
-            nearby_devices = bluetooth.discover_devices()
+            nearby_devices = bluetooth.discover_devices() #gets list f near by devices
 
             for mac_address in nearby_devices:
-                if self.deviceName == bluetooth.lookup_name(mac_address, timeout=5):
+                if self.deviceName == bluetooth.lookup_name(mac_address, timeout=5): #keep trying to get the requested name, if nto set a timeout of 5 seconds
                     foundDevice = True
                     self.deviceMac = mac_address
-                    break
+                    break #stop loop
+
             if foundDevice != False:
-                print("Your device ({}) with the MAC address: {}, has been found".format(self.deviceName, self.deviceMac))
+                print("Your device ({}) with the MAC address: {}, has been found".format(self.deviceName, self.deviceMac)) #visual confirmation
                 self.bluetoothSelection() #ask user if they want to save device to DB
                 break
+
             else:
                 print("Could not find your device, retrying...")
 
-    def bluetoothSelection(self):
+    def bluetoothSelection(self): #gets user input for adding device to the database. 
         addToDbChoice = input("No Record Found in Database, \n Would you like to save this device into the database Y or N?: ")
         self.choiceAction(addToDbChoice)
 
@@ -86,7 +90,6 @@ class Bluetooth:
             print("Add to database")
             self.addDeviceToDb()
             self.notifySelectection()
-
         elif choice == 'N':
             #ignore, just send message with current device
             print("DONT add to database")
@@ -95,7 +98,7 @@ class Bluetooth:
             self.bluetoothSelection() #ask user if they want to save device to DB
 
 
-    def notifySelectection(self):
+    def notifySelectection(self): #gets user input for notifications
         notifyChoice = input("Do you want to send a notification now Y or N?: ")
         self.notifyActions(notifyChoice)
 
@@ -112,7 +115,7 @@ class Bluetooth:
             print("Incorrect input, either choose Y for yes or N for no...")
             self.notifySelectection() #ask user if they want to save device to DB
 
-    def addDeviceToDb(self):
+    def addDeviceToDb(self): #Simply adds the device details to the database
         db = MySQLdb.connect(host="localhost", user="iot", passwd="Password123?", db="iot")
         cursor = db.cursor()
         sql = "INSERT INTO bluetooth (ubid, devicemac, devicename, created_at, updated_at) VALUES (%s, %s, %s, %s, %s)"
@@ -120,7 +123,7 @@ class Bluetooth:
         cursor.execute(sql, val)
         db.commit() #saves row in database based of object 
 
-    def lookUpAndNotfy(self):
+    def lookUpAndNotfy(self): #looks up device in database, does checks and will send a PushBullet notification if the checks have been passed
         temp = None
         humidity = None
         status = None
@@ -151,7 +154,7 @@ class Bluetooth:
         else:
             raise Exception("ERROR: Could not send notification! Response Received: {}, check here for more information: https://docs.pushbullet.com/#http-status-codes".format(response))
 
-    def automateAndNotify(self):
+    def automateAndNotify(self): #automates the jobs of looking up devices in the database, matches records against devices nearby, then sends a notification if checks have been passed
         temp = None
         humidity = None
         status = None
@@ -166,14 +169,14 @@ class Bluetooth:
         # prepare a cursor object using cursor() method
         cursor = connection.cursor()
 
-        cursor.execute("SELECT ubid, devicename, devicemac, updated_at FROM bluetooth")
+        cursor.execute("SELECT ubid, devicename, devicemac, updated_at FROM bluetooth") #performs device look up
         deviceRows = cursor.fetchall()
-        cursor.execute("SELECT temp, humidity, status, tempStatusMSG, humidityStatusMSG FROM readings ORDER BY urid DESC LIMIT 1")
+        cursor.execute("SELECT temp, humidity, status, tempStatusMSG, humidityStatusMSG FROM readings ORDER BY urid DESC LIMIT 1") #performs readings look up
         rows = cursor.fetchall()
-        addresses = []
-        nearby_devices = bluetooth.discover_devices()
+        addresses = [] #init a list of addresses.
+        nearby_devices = bluetooth.discover_devices() #gets a list of nearby bluetooth mac addresses.
         for mac_address in nearby_devices:
-            addresses.append(mac_address)
+            addresses.append(mac_address) #adds mac addresses to array
         # execute the SQL query using execute() method.
         # fetch all of the rows from the query
         for row in rows:
@@ -192,8 +195,8 @@ class Bluetooth:
             if updated_at > datetime.utcnow() - timedelta(seconds = 3600): #if device has sent a notification in the last hour
                 print("Device: {} has already sent a message less then 1 hour ago.".format(deviceName))
             else:
-                for currentMacAddress in addresses:
-                    if currentMacAddress == deviceMac:
+                for currentMacAddress in addresses: #for all nearby bluetooth mac addresses
+                    if currentMacAddress == deviceMac: #if a near by device matches a mac address in the database
                         print("Sending notification for device: {}".format(deviceName))
                         headers = {'Access-Token': 'o.XE04vcyyRIYKWaqDhno27lsmcE0uxGXk', 'Content-Type': 'application/json'}
                         payload = {'body':'Temprature: {},\n Humidity: {},\n Status: {},\n {},\n {}'.format(temp, humidity, status, tempStatusMSG, humidityStatusMSG),'title':'Bluetooth Notification for device: {}'.format(deviceName),'type':'note','channel_tag':'iot-s3656070'}
@@ -201,7 +204,7 @@ class Bluetooth:
                         print("{}".format(response))
                         if response.status_code == 200:
                             print('Sent notification!')
-                            self.updateUpdatedAt(ubid)
+                            self.updateUpdatedAt(ubid) #update time if the notification has been successfully sent
                         else:
                             raise Exception("ERROR: Could not send notification! Response Received: {}, check here for more information: https://docs.pushbullet.com/#http-status-codes".format(response))
 
