@@ -25,7 +25,7 @@ class Bluetooth:
         #self.deviceName = input('Enter the name of your phone: ')
         print("NOTE: If no device name is entered in 20 seconds, notifications will be sent automatically to nearby devices already in the database.")
         print("Enter the name of your bluetooth device: ")
-        a, b, c = select.select( [sys.stdin], [], [], 20 ) #is similar so input method. However is used to delay for 20 seconds.
+        a, b, c = select.select( [sys.stdin], [], [], 20 ) #is similar so input method. However is used to delay for 20 seconds. If no user input detected begin automation -> automateAndNotify()
         if (a):
             self.searchDb(sys.stdin.readline().strip())
         else:
@@ -33,10 +33,9 @@ class Bluetooth:
 
     def searchDb(self, deviceName):
         self.deviceName = deviceName
-        print("INPUT: {}".format(deviceName))
         currentDeviceName = None
         currentDeviceMac = None
-        print("Looking up device name: {} in database...".format(currentDeviceName))
+        print("Looking up device name: {} in database...".format(self.deviceName))
         connection = MySQLdb.connect(host="localhost", user="iot", passwd="Password123?", database="iot")
         cursor = connection.cursor()
         sql = "SELECT devicename, devicemac, updated_at FROM bluetooth WHERE devicename = %s"
@@ -44,18 +43,14 @@ class Bluetooth:
         cursor.execute(sql, adr)
         rows = cursor.fetchall()
         for row in rows:
-            currentDeviceName = row[0]  # loops through and adds temp to 
-        for row in rows:
-            currentDeviceMac = row[1]  # loops through and adds temp to array
-        for row in rows:
-            lastUpdate = row[2]  # loops through and adds temp to array
-            print(lastUpdate)
+            currentDeviceName = row[0]  # loops through and gets name
+            currentDeviceMac = row[1]  # loops through and gets mac addres
+            lastUpdate = row[2]  # loops through and gets timestamp
         if currentDeviceName is not None and currentDeviceMac is not None:
             print("Device named {} with the MAC address of: {}, is already in the database".format(currentDeviceName, currentDeviceMac))
             if lastUpdate > datetime.utcnow() - timedelta(seconds = 3600): #if device has sent a notification in the last hour
-                print("Device has already sent a message")
+                print("Device: {} has already sent a message".format(currentDeviceName))
             else:
-                print("SEND A NEW MESSAGE")
                 self.lookUpAndNotfy()
         if currentDeviceName is None or currentDeviceMac is None:
             self.search(self.deviceName)
@@ -114,7 +109,7 @@ class Bluetooth:
             #ignore, just send message with current device
             print("Exiting...")
         else:
-            print("\nIncorrect input, either choose Y for yes or N for no...")
+            print("Incorrect input, either choose Y for yes or N for no...")
             self.notifySelectection() #ask user if they want to save device to DB
 
     def addDeviceToDb(self):
@@ -147,14 +142,14 @@ class Bluetooth:
             humidityStatusMSG = row[4] #humidityMSG
 
         headers = {'Access-Token': 'o.XE04vcyyRIYKWaqDhno27lsmcE0uxGXk', 'Content-Type': 'application/json'}
-        payload = {'body':'Temprature: {},\n Humidity: {},\n Status: {},\n {},\n {}'.format(temp, humidity, status, tempStatusMSG, humidityStatusMSG),'title':'Bluetooth Notification','type':'note','channel_tag':'iot-s3656070'}
+        payload = {'body':'Temprature: {},\n Humidity: {},\n Status: {},\n {},\n {}'.format(temp, humidity, status, tempStatusMSG, humidityStatusMSG),'title':'Bluetooth Notification for device: {}'.format(self.deviceName),'type':'note','channel_tag':'iot-s3656070'}
         response = requests.post("https://api.pushbullet.com/v2/pushes", json=payload, headers=headers)
         print("{}".format(response))
         if response.status_code == 200:
             print('Sent notification!')
             self.updateUpdatedAt(self.ubid)
         else:
-            raise Exception("ERROR: Could not send notification! Reponse Recived: {}, check here for more information: https://docs.pushbullet.com/#http-status-codes".format(response))
+            raise Exception("ERROR: Could not send notification! Response Received: {}, check here for more information: https://docs.pushbullet.com/#http-status-codes".format(response))
 
     def automateAndNotify(self):
         temp = None
@@ -167,7 +162,6 @@ class Bluetooth:
         deviceMac = None
         updated_at = None
         print("NOTE: If a device has recently been added, please wait 1 hour...")
-        print("Sending....")
         connection = MySQLdb.connect(host="localhost", user="iot", passwd="Password123?", database="iot")
         # prepare a cursor object using cursor() method
         cursor = connection.cursor()
@@ -196,7 +190,7 @@ class Bluetooth:
             updated_at = deviceRow[3]
             time.sleep(2) #delay 2 seconds so we dont spam PushBullet's API
             if updated_at > datetime.utcnow() - timedelta(seconds = 3600): #if device has sent a notification in the last hour
-                print("Device has already sent a message")
+                print("Device: {} has already sent a message less then 1 hour ago.".format(deviceName))
             else:
                 for currentMacAddress in addresses:
                     if currentMacAddress == deviceMac:
@@ -209,10 +203,9 @@ class Bluetooth:
                             print('Sent notification!')
                             self.updateUpdatedAt(ubid)
                         else:
-                            raise Exception("ERROR: Could not send notification! Reponse Recived: {}, check here for more information: https://docs.pushbullet.com/#http-status-codes".format(response))
+                            raise Exception("ERROR: Could not send notification! Response Received: {}, check here for more information: https://docs.pushbullet.com/#http-status-codes".format(response))
 
-    def updateUpdatedAt(self, ubid):
-        print("updated")
+    def updateUpdatedAt(self, ubid):#updates the current bluetooth device in the database, and updates the time to now, so we can make sure only once device gets a maximum of 1 message per hour
         db = MySQLdb.connect(host="localhost", user="iot", passwd="Password123?", db="iot")
         update = db.cursor()
         sql = "UPDATE bluetooth SET updated_at = %s WHERE ubid = %s"

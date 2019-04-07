@@ -12,8 +12,7 @@ class CreateReport:
         cursor = connection.cursor()
 
         # execute the SQL query using execute() method. should be date and status
-        cursor.execute(
-            "select DATE_FORMAT(created_at, '%d/%m/%Y'), status, tempStatusMSG, humidityStatusMSG  from readings")
+        cursor.execute("select DATE_FORMAT(created_at, '%d/%m/%Y'), status, tempStatusMSG, humidityStatusMSG from readings group by DATE(created_at)")
 
         # fetch all of the rows from the query
         data = cursor.fetchall()
@@ -24,7 +23,7 @@ class CreateReport:
         # write all the data in the report.csv
         c.writerow(["Date", "Status"])
         for row in data:
-            c.writerow(row)
+            c.writerow(row )
 
 
 report = CreateReport()

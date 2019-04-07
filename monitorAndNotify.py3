@@ -40,8 +40,8 @@ class Reading:
         self.pushed = False
 
         '''
-        The reason why we are setting the temperature and humidity paramaters (as shown above) is to easily compaire 
-        the actual temps and humidity witht he params, rather then constantly opening and reading the 
+        The reason why we are setting the temperature and humidity paramaters (as shown above) is to easily compare 
+        the actual temps and humidity with the params, rather then constantly opening and reading the 
         config.json file. 
         '''
         self.checkStatus() #checks and sets object status on creation
@@ -105,7 +105,6 @@ class Reading:
 #Create object
 reading = Reading(SenseHat().get_temperature(), SenseHat().get_humidity()) #creats a new reading object which passes in the temp, humidity, time and status as dictated form the SENSE_HAT
 reading.addToDatabase() #adds object to database
-reading.log() #logs the object to the console
 reading.pushNotification() #sends a push notification about the reading.
 reading.log() #logs the object to the console
 
